@@ -1,0 +1,36 @@
+{
+    "name": "express-mongodb-apidoc",
+    "version": "1.0.1",
+    "description": "Express + mongodb + apiDoc",
+    "main": "index.js",
+    "scripts": {
+        "dev": "cross-env NODE_ENV=development nodemon index",
+        "start": "cross-env NODE_ENV=production node index",
+        "apidoc": "apidoc -i ./routes/ -o ./public/apidoc/",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "773561801@qq.com",
+    "license": "ISC",
+    "dependencies": {
+        "env2": "^2.2.2",
+        "express": "^4.16.4",
+        "express-validation": "^1.0.2",
+        "joi": "^14.3.1",
+        "jsonwebtoken": "^8.5.1",
+        "mysql": "^2.15.0",
+        "uuid": "^3.3.2"
+    },
+    "apidoc": {
+        "name": "plqin",
+        "version": "1.0.0",
+        "description": "plqin项目API文档",
+        "title": "plqin API",
+        "url": "http://localhost:4000",
+        "forceLanguage": "zh-cn"
+    },
+    "devDependencies": {
+        "apidoc": "^0.19.1",
+        "cross-env": "^6.0.3",
+        "nodemon": "^1.18.10"
+    }
+}

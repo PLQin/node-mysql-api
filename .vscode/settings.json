@@ -1,0 +1,9 @@
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/public": true
+    },
+    "search.useGlobalIgnoreFiles": true,
+    "editor.formatOnSave": true,
+    "code-runner.runInTerminal": true
+}
