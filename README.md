@@ -1,6 +1,6 @@
 
 
-## \# nodejs-mysql-api
+## nodejs-mysql-api
 
 #### \# 基础知识
 
@@ -41,30 +41,6 @@
 -   考虑使用 cookie-parser
     -   文档 ： https://www.npmjs.com/package/cookie-parser
 
-# const express = require('express')
-
-
-app.all('*', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Headers", "X-Requested-With")
-    res.header("Access-Control-Allow-Methods", "POST,GET")
-    res.header("X-Powered-By", ' 3.2.1')
-    // res.header("Content-Type", "application/json;charset=utf-8");
-    next()
-})
-
-
-
-// error handler, send stacktrace only during development 錯誤後最後才跑這邊
-app.use((err, req, res, next) => {
-    res.status(err.status).json({
-        message: err.isPublic ? err.message ,
-        code: err.code ? err.code,
-        stack: config.env === 'development' ? err.stack : {}
-    });
-    next();
-});
-
 
 ## \# 数据库
 
@@ -92,19 +68,7 @@ ims_zhtc_user  # 用户表
     - api : https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
 
 
-## \# 写在前面的话
-
-对于经常使用node的开发人员来说，每次搭建后台服务，都需要考虑如何建立一个更好的文件结构，而大部分的工作都是重复的，有时候会直接拷贝以前的项目文件，但是需要删除或修改很多东西，而且有很多都不需要的文件，这就很烦恼。
-
-想到像`vue-cli`那样的脚手架一键生成基础项目模版，那我何不做多个属于自己的项目模版。使用的时候只需要一行命令就可以省去很多劳动力，不仅省时省事，而且可以定制自己想要的项目模版。
-
-说干就干，做脚手架之前先把模版做好，根据之前做小程序时搭建的express后端服务，这里做了一个基于express的纯后端模版。
-
-
----
-
-
-## \# 主要功能
+## Main function
 
 - ✔ 注册与登录接口
 - ✔ 支持JWT验证
@@ -116,85 +80,46 @@ ims_zhtc_user  # 用户表
 - ❓ redis支持
 - ❓ 自动化测试
 
-## 模版目录结构
+
+## Folder Structure
 
 ```
-    ├── README.md  // 说明文档
-    ├── app.js  // express实例化文件
-    ├── bin 
-    │   └── www // 主入口文件
-    ├── config
-    │   ├── config.js // 数据库配置
-    │   └── index.js // 全局参数配置
-    ├── control // Controller层目录
-    │   └── userControl.js
-    ├── helper // 自定义API Error拋出错误信息
-    │   └── AppError.js
-    ├── joi-rule // Joi 参数验证规则
-    │   └── user-validation.js
-    ├── models // sequelize需要的数据库models
-    │   ├── index.js // 处理当前目录的所有model
-    │   └── user.js // user表的model
-    ├── package-lock.json
-    ├── package.json
-    ├── public
-    │   └── apidoc // 自动生成的apidoc文档
-    ├── routes // 路由目录
-    │   └── user.js
-    ├── service // service层目录
-    │   └── user.js
-    └── until // jwt认证
-        └── token.js
+  ├── README.md  // 说明文档
+  ├── app.js  // express实例化文件
+  ├── bin 
+  │   └── www // 主入口文件
+  ├── config
+  │   ├── config.js // 数据库配置
+  │   └── index.js // 全局参数配置
+  ├── control // Controller层目录
+  │   └── userControl.js
+  ├── helper // 自定义API Error拋出错误信息
+  │   └── AppError.js
+  ├── joi-rule // Joi 参数验证规则
+  │   └── user-validation.js
+  ├── models // sequelize需要的数据库models
+  │   ├── index.js // 处理当前目录的所有model
+  │   └── user.js // user表的model
+  ├── package-lock.json
+  ├── package.json
+  ├── public
+  │   └── apidoc // 自动生成的apidoc文档
+  ├── routes // 路由目录
+  │   └── user.js
+  ├── service // service层目录
+  │   └── user.js
+  └── until // jwt认证
+      └── token.js
 ```
 
-
-## \# 主要文件说明
-
-**package.json :**
-
-由于我的脚手架工`qiya-cli`使用了Metalsmith和Handlebars 修改模板文件,所以可以看到在项目名称、项目介绍、作者处使用模版语法。
-
-此模版主要有三个`scripts`命令: 
--   `npm run dev`开发环境使用
--   `npm run start`生产环境使用
--   `npm run apidoc`自动生成apidoc文档  ( 启动后访问 [http://localhost:4000/apidoc](http://localhost:4000/apidoc) )
-
-
-**.env.example :**
-
-为了防止敏感数据被放到git仓库中，我引入一个被 .gitignore 的 .env 的文件，以 key-value 的方式，记录系统中所需要的可配置环境参数。并同时配套一个.env.example 的示例配置文件用来放置占位，.env.example 可以放心地进入 git 版本仓库。
-
-在实际使用过程中，只需拷贝一份此文件重命名为.env，然后修改为真实的配置信息即可。
-
-**routes > user.js :**
-
-由于引入了apidoc，所以在写路由的时候注意按照以下格式书写api说明。
-
-如果是个人项目，可能会感觉麻烦，不需要这种方式，但是如果是协同工作或者项目比较大的时候，有一个良好的api文档就显的非常重要了。
-
-所以建议日常项目中养成写api文档的习惯，对以后的工作将会有很大的帮助。
 
 更详细的apidoc文档配置可以参考[https://www.jianshu.com/p/9353d5cc1ef8](https://www.jianshu.com/p/9353d5cc1ef8)或[官网](http://apidocjs.com/)。
-
-
-**joi-rule > user-validation.js :**
 
 Joi参数校验规则。
 中文设置 : https://github.com/hapijs/joi/issues/598
 
 
-**untils > token.js :**
-
-jwt验证的实现逻辑，包括token的下发和校验。
-
-
-**models > index.js :**
-
-sequelize实例化，以及映射数据库表。
-
----
-
-## \# 相关工具介绍
+## 相关工具介绍
 
 -  sequelize
 
@@ -241,7 +166,7 @@ sequelize实例化，以及映射数据库表。
     * [JSON Web Token 入门教程](http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)
 
 
-## \# 鸣谢
+## 鸣谢
 
 -   https://github.com/ziad-saab/reddit-nodejs-api
 -   https://github.com/restapiexample/nodejs-restapi-using-express-mysql
@@ -261,8 +186,7 @@ sequelize实例化，以及映射数据库表。
 
 
 
-## \# 联系我
+## 联系我
 
- 如果你有好的项目模版，欢迎联系我
-![](https://user-gold-cdn.xitu.io/2019/3/27/169be1579db87ef5?w=430&h=430&f=jpeg&s=38572)
+如果你有好的idea，欢迎联系我 
 
