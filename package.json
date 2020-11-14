@@ -1,36 +1,51 @@
 {
-    "name": "express-mongodb-apidoc",
-    "version": "1.0.1",
-    "description": "Express + mongodb + apiDoc",
-    "main": "index.js",
-    "scripts": {
-        "dev": "cross-env NODE_ENV=development nodemon index",
-        "start": "cross-env NODE_ENV=production node index",
-        "apidoc": "apidoc -i ./routes/ -o ./public/apidoc/",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "773561801@qq.com",
-    "license": "ISC",
-    "dependencies": {
-        "env2": "^2.2.2",
-        "express": "^4.16.4",
-        "express-validation": "^1.0.2",
-        "joi": "^14.3.1",
-        "jsonwebtoken": "^8.5.1",
-        "mysql": "^2.15.0",
-        "uuid": "^3.3.2"
-    },
-    "apidoc": {
-        "name": "plqin",
-        "version": "1.0.0",
-        "description": "plqin项目API文档",
-        "title": "plqin API",
-        "url": "http://localhost:4000",
-        "forceLanguage": "zh-cn"
-    },
-    "devDependencies": {
-        "apidoc": "^0.19.1",
-        "cross-env": "^6.0.3",
-        "nodemon": "^1.18.10"
-    }
+  "name": "express-mysql-apidoc",
+  "version": "0.0.1",
+  "description": "A magical node server. Express + mysql + apidoc",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "apidoc": "apidoc -i ./routes/ -o ./public/apidoc/"
+  },
+  "author": "599964870@qq.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PLQin/node-mysql-api.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mysql",
+    "apiDoc"
+  ],
+  "dependencies": {
+    "cors": "^2.8.5",
+    "env2": "^2.2.2",
+    "express": "^4.16.4",
+    "express-validation": "^1.0.2",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.15.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "apidoc": "^0.19.1",
+    "cross-env": "^6.0.3",
+    "eslint": "^7.9.0",
+    "nodemon": "^1.18.10"
+  },
+  "apidoc": {
+    "name": "express-mysql-apidoc",
+    "version": "1.0.0",
+    "description": "express-mysql-apidoc api文档",
+    "title": "express-mysql-apidoc api",
+    "url": "http://localhost:4000",
+    "forceLanguage": "zh-cn"
+  },
+  "engines": {
+    "node": ">= 12.0.0",
+    "npm": ">= 6.14.4"
+  }
 }

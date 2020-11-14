@@ -1,9 +1,17 @@
 {
-    "search.exclude": {
-        "**/node_modules": true,
-        "**/public": true
-    },
-    "search.useGlobalIgnoreFiles": true,
-    "editor.formatOnSave": true,
-    "code-runner.runInTerminal": true
+  "code-runner.runInTerminal": true,
+  "search.exclude": {
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/public": true
+  },
+  "files.watcherExclude": {
+    "**/dist/**": true
+  },
+  "search.useGlobalIgnoreFiles": true,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "terminal.integrated.confirmOnExit": true,
+  "terminal.integrated.cursorBlinking": true,
+  "editor.formatOnSave": true,
 }

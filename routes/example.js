@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysqlConnection = require('../database.js');
+const mysqlConnection = require('../config/database.js');
 
 // GET all Employees
 router.get('/', (req, res) => {
@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
       res.json(rows);
     } else {
       console.log(err);
+      res.json({ code: 500, message: err.code });
     }
   });
 });
@@ -22,6 +23,7 @@ router.get('/:id', (req, res) => {
       res.json(rows[0]);
     } else {
       console.log(err);
+      res.json({ code: 500, message: err.code });
     }
   });
 });
@@ -35,6 +37,7 @@ router.delete('/:id', (req, res) => {
       res.json({ status: 'Employee Deleted' });
     } else {
       console.log(err);
+      res.json({ code: 500, message: err.code });
     }
   });
 });
@@ -55,6 +58,7 @@ router.post('/', (req, res) => {
       res.json({ status: 'Employeed Saved' });
     } else {
       console.log(err);
+      res.json({ code: 500, message: err.code });
     }
   });
 
@@ -75,6 +79,7 @@ router.put('/:id', (req, res) => {
       res.json({ status: 'Employee Updated' });
     } else {
       console.log(err);
+      res.json({ code: 500, message: err.code });
     }
   });
 });
