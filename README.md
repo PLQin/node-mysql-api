@@ -12,8 +12,6 @@
 -  debug 
     启动 node 服务后， 监听bug并输出在控制台
 
--  env2 
-
 -  express 
     nodejs服务
 
@@ -26,12 +24,6 @@
 -  jsonwebtoken 
     生成 token 的库
 
--  mysql 
-    连接 mysql
-
--  uuid 
-    随机id
-
 -  考虑使用 sequelize
     Sequelize是一款基于Nodejs功能强大的异步ORM框架。
     同时支持PostgreSQL, MySQL, SQLite and MSSQL多种数据库，很适合作为Nodejs后端数据库的存储接口，为快速开发Nodejs应用奠定扎实、安全的基础。
@@ -40,17 +32,6 @@
 
 -   考虑使用 cookie-parser
     -   文档 ： https://www.npmjs.com/package/cookie-parser
-
-
-## \# 数据库
-
-#### \# 表
-
-ims_zhtc_distribution
-ims_zhtc_information
-ims_zhtc_joinlist
-ims_zhtc_gorder
-ims_zhtc_user  # 用户表
 
 
 ## \# 微信
