@@ -8,7 +8,8 @@ const config = require('./index.js');
 let connection = mysql.createPool(Object.assign(config, {
 
   // 启用后，您可以通过用分号 multipleStatements 分隔每个语句来对多个语句执行查询。结果将是每个语句的数组。
-  // 见： https://www.itranslater.com/qa/details/2582855167196529664
+  // 见: https://www.itranslater.com/qa/details/2582855167196529664
+  // 见: https://www.runoob.com/nodejs/nodejs-mysql.html
   multipleStatements: true,
 }));
 
