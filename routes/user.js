@@ -27,8 +27,8 @@ router.get('/admin/user/statistics', async (req, res) => {
   res.json({
     code: 200,
     data: {
-      nums: nums[0],
-      today_visitors: tvrs.length,
+      nums: nums[0].nums,
+      today: tvrs.length,
     }
   });
 });
@@ -72,34 +72,20 @@ router.get('/admin/user/list', async (req, res) => {
  * 
  */
 router.get('/admin/user/detail', async (req, res) => {
-  let {
-    id
-  } = req.query;
+  let { id } = req.query;
+  let params = []
+  let sql = `SELECT * FROM ims_zhtc_user WHERE 1 = 1`
+  if (id) {
+    sql += ` AND id = ?`
+    params.push(Number(id))
+  }
 
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-    let params = []
-    let sql = `SELECT * FROM ims_zhtc_user WHERE 1 = 1`
-    if (id) {
-      sql += ` AND id = ?`
-      params.push(Number(id))
-    }
-
-    connection.query(sql, params, (err, rows, fields) => {
-      if (!err) {
-        if (rows && rows[0]) {
-          res.json({ code: 200, data: rows[0] });
-        } else {
-          res.json({ code: 100001, data: {}, message: '没有更多的数据' });
-        }
-      } else {
-        console.log(err);
-        res.json({ code: 500, message: err.code });
-      }
-
-      connection.release();
-    });
-  });
+  const rows = await mysqlConnection(res, sql, params)
+  if (rows && rows[0]) {
+    res.json({ code: 200, data: rows[0] });
+  } else {
+    res.json({ code: 100001, data: {}, message: '没有更多的数据' });
+  }
 });
 
 
