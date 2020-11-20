@@ -4,19 +4,8 @@ const mysqlConnection = require('../config/database.js');
 
 // GET all Employees
 router.get('/', (req, res) => {
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-    connection.query('SELECT * FROM employee', (err, rows, fields) => {
-      if (!err) {
-        res.json({ data: rows });
-      } else {
-        res.json({ code: 500, message: err.code });
-        console.log(err);
-      }
-
-      connection.release();
-    });
-  });
+  const rows = await mysqlConnection(res, 'SELECT * FROM employee')
+  res.json({ code: 200, data: rows });
 });
 
 
@@ -29,64 +18,22 @@ router.get('/', (req, res) => {
  */
 router.get('/:id', (req, res) => {
   const { id } = req.query;
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-    connection.query('SELECT * FROM employee WHERE id = ?', [id], (err, rows, fields) => {
-      if (!err) {
-        res.json(rows[0]);
-      } else {
-        res.json({ code: 500, message: err.code });
-        console.log(err);
-      }
-
-      connection.release();
-    });
-  });
-});
-
-
-// DELETE An Employee
-router.delete('/:id', (req, res) => {
-  const { id } = req.query;
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-    connection.query('DELETE FROM employee WHERE id = ?', [id], (err, rows, fields) => {
-      if (!err) {
-        res.json({ status: 'Employee Deleted' });
-      } else {
-        console.log(err);
-        res.json({ code: 500, message: err.code });
-      }
-
-      connection.release();
-    });
-  });
+  const rows = await mysqlConnection(res, 'SELECT * FROM employee WHERE id = ?', [id])
+  res.json({ code: 200, data: rows[0] });
 });
 
 
 // INSERT An Employee
 router.post('/', (req, res) => {
   const { id, name, salary } = req.body;
-  console.log(id, name, salary);
-  const query = `
+  const sql = `
     SET @id = ?;
     SET @name = ?;
     SET @salary = ?;
     CALL employeeAddOrEdit(@id, @name, @salary);
   `;
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-    connection.query(query, [id, name, salary], (err, rows, fields) => {
-      if (!err) {
-        res.json({ status: 'Employeed Saved' });
-      } else {
-        console.log(err);
-        res.json({ code: 500, message: err.code });
-      }
-
-      connection.release();
-    });
-  });
+  const rows = await mysqlConnection(res, sql, [id, name, salary])
+  res.json({ code: 200, data: rows });
 });
 
 
@@ -99,28 +46,12 @@ router.post('/', (req, res) => {
  * 
  */
 router.post('/user/add', (req, res) => {
-  let {
-    openid = 0,
-    name,
-    salary
-  } = req.query;
+  let { openid = 0, name, salary } = req.query;
   let params = [openid, name, salary]
-  let query = `insert into ims_zhtc_user (openid) values(?);`;
+  let sql = `insert into ims_zhtc_user (openid) values(?);`;
 
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-
-    connection.query(query, params, (err, rows, fields) => {
-      if (!err) {
-        res.json({ data: {}, code: 200 });
-      } else {
-        console.log(err);
-        res.json({ code: 500, message: err.code });
-      }
-
-      connection.release();
-    });
-  });
+  const rows = await mysqlConnection(res, sql, params)
+  res.json({ code: 200, data: rows });
 });
 
 
@@ -129,26 +60,15 @@ router.post('/user/add', (req, res) => {
 router.put('/:id', (req, res) => {
   const { name, salary } = req.body;
   const { id } = req.query;
-  const query = `
+  const sql = `
     SET @id = ?;
     SET @name = ?;
     SET @salary = ?;
     CALL employeeAddOrEdit(@id, @name, @salary);
   `;
 
-  mysqlConnection.getConnection(function (err, connection) {
-    if (err) throw err; // not connected!
-    connection.query(query, [id, name, salary], (err, rows, fields) => {
-      if (!err) {
-        res.json({ status: 'Employee Updated' });
-      } else {
-        console.log(err);
-        res.json({ code: 500, message: err.code });
-      }
-
-      connection.release();
-    });
-  });
+  const rows = await mysqlConnection(res, sql, [id, name, salary])
+  res.json({ code: 200, data: rows, message: 'Employee Updated' });
 });
 
 
