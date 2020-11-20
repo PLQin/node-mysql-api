@@ -3,7 +3,7 @@ const router = express.Router();
 const mysqlConnection = require('../config/database.js');
 
 // GET all Employees
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const rows = await mysqlConnection(res, 'SELECT * FROM employee')
   res.json({ code: 200, data: rows });
 });
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
  * @apiName :id  
  * 
  */
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.query;
   const rows = await mysqlConnection(res, 'SELECT * FROM employee WHERE id = ?', [id])
   res.json({ code: 200, data: rows[0] });
@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
 
 
 // INSERT An Employee
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { id, name, salary } = req.body;
   const sql = `
     SET @id = ?;
@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
  * @apiParam {string} user_data 
  * 
  */
-router.post('/user/add', (req, res) => {
+router.post('/user/add', async (req, res) => {
   let { openid = 0, name, salary } = req.query;
   let params = [openid, name, salary]
   let sql = `insert into ims_zhtc_user (openid) values(?);`;
@@ -57,7 +57,7 @@ router.post('/user/add', (req, res) => {
 
 // post 和 put请求方法区别点简析
 // https://www.jianshu.com/p/e0b39b52672c
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const { name, salary } = req.body;
   const { id } = req.query;
   const sql = `
