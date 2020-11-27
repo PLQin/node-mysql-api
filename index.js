@@ -33,7 +33,7 @@ app.set('trust proxy', function (ip) {
 app.use(cors());
 app.options('*', cors());
 app.all('*', cors());
-app.all('*', function (req, res, next) {
+app.all('*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Headers', "*");
   res.header("Access-Control-Allow-Methods", "*");
@@ -43,7 +43,7 @@ app.all('*', function (req, res, next) {
 
 
 /**
- * 针对POST和PUT请求, 处理前端 send 的 json 数据(parse application/json)
+ * 针对POST和PUT请求, 处理前端发送给后端的 json 数据(parse application/json)
  * https://expressjs.com/en/api.html
  * 
  * 当extended为false的时候，键值对中的值就为'String'或'Array'形式，为true的时候，则可为任何数据类型。
